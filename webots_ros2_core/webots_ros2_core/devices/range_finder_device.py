@@ -16,7 +16,7 @@
 
 import numpy as np
 from sensor_msgs.msg import Image
-from rclpy.qos import qos_profile_sensor_data
+from rclpy.qos import DurabilityPolicy, HistoryPolicy, QoSProfile, QoSReliabilityPolicy
 from .sensor_device import SensorDevice
 
 
@@ -49,7 +49,12 @@ class RangeFinderDevice(SensorDevice):
             self._image_publisher = self._node.create_publisher(
                 Image,
                 self._topic_name + '/image_depth',
-                qos_profile_sensor_data
+                QoSProfile(
+                    depth=1,
+                    reliability=QoSReliabilityPolicy.RELIABLE,
+                    durability=DurabilityPolicy.TRANSIENT_LOCAL,
+                    history=HistoryPolicy.KEEP_LAST,
+                )
             )
 
             # Load parameters
