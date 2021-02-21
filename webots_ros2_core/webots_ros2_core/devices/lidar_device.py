@@ -126,7 +126,7 @@ class LidarDevice(SensorDevice):
             msg.header.frame_id = self._frame_id + '_rotated'
             msg.angle_min = -0.5 * self._wb_device.getFov()
             msg.angle_max = 0.5 * self._wb_device.getFov()
-            msg.angle_increment = self._wb_device.getFov() / (self._wb_device.getHorizontalResolution() - 1)
+            msg.angle_increment = self._wb_device.getFov() / self._wb_device.getHorizontalResolution()
             msg.scan_time = self._wb_device.getSamplingPeriod() / 1000.0
             msg.range_min = self._wb_device.getMinRange() + self.__noise
             msg.range_max = self._wb_device.getMaxRange() - self.__noise
